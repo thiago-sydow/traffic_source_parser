@@ -1,9 +1,12 @@
-require "traffic_source_parser/parser/referrer_parser"
-require "traffic_source_parser/parser/campaign_parser"
+require 'yaml'
+require 'traffic_source_parser/parser/referrer_parser'
+require 'traffic_source_parser/parser/campaign_parser'
 
 module TrafficSourceParser
   module Parser
     extend self
+
+    CAMPAIGN_VALUES = /utmccn|utmcmd|utmcsr|utmctr|utmcct|utm_source|utm_medium|utm_term|utm_content|utm_campaign/
 
     def create(cookie_value)
       @cookie_value = cookie_value
@@ -18,8 +21,7 @@ module TrafficSourceParser
     end
 
     def is_campaign?
-      @cookie_value =~ /utmccn|utmcmd|utmcsr|utmctr|utmcct|utm_source|utm_medium|utm_term|utm_content|
-tm_campaign/
+      CAMPAIGN_VALUES =~ @cookie_value
     end
 
   end

@@ -6,23 +6,24 @@ module TrafficSourceParser
     module CampaignParser
       extend self
 
-      # TODO - refactor
-
       def parse(campaign_query)
         @campaign_query = campaign_query
         TrafficSourceParser::Result::Campaign.new(campaign_hash)
       end
 
+      private
+
       def campaign_hash
-        translated_campaign_hash = {}
+        result_hash = {}
+
         parse_campaign_params.to_h.each do |key, value|
-          translated_key = campaign_params_mapper[key] || key
-          translated_campaign_hash[translated_key] = URI.unescape(value)
+          translated_key = CAMPAIGN_CONFIG[key] || key
+          result_hash[translated_key] = URI.unescape(value)
         end
-        if translated_campaign_hash.delete("utmgclid")
-          translated_campaign_hash["medium"] = "cpc"
-        end
-        translated_campaign_hash
+
+        result_hash['medium'] = 'cpc' if result_hash.delete('utmgclid')
+
+        result_hash
       end
 
       def campaign_params
@@ -34,11 +35,8 @@ module TrafficSourceParser
         delete_if { |params| params.size != 2 }
       end
 
-      def campaign_params_mapper
-        @campaign_params ||= YAML::load_file(File.join(TrafficSourceParser.config_path, 'campaign_params.yml'))
-      end
-
     end
+    
   end
-end
 
+end
