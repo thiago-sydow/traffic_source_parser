@@ -269,54 +269,7 @@ describe TrafficSourceParser do
 	      let(:klass) { TrafficSourceParser::Result::Campaign }
 
 	      it_behaves_like "returns the correct object with attributes"
-	  end
-
-    end
-
-    context "when source is campaign" do
-
-      let(:sources) do
-        [
-          {
-            cookie_value: "utm_campaign=spring&utm_m" +
-                          "edium=referral&utm_source=exampleblog",
-            campaign: "spring" ,
-            medium: "referral" ,
-            source: "exampleblog"
-          },
-          {
-            cookie_value: "utm_campaign=spring&utm_m" +
-                          "edium=email&utm_source=newsletter1",
-            campaign: "spring",
-            medium: "email",
-            source: "newsletter1"
-          },
-          {
-            cookie_value: "utm_campaign=spring&utm_m" +
-                          "edium=email&utm_source=newsletter1&utm_content=to" +
-                          "plink",
-            campaign: "spring",
-            medium: "email",
-            source: "newsletter1",
-            content: "toplink"
-          },
-          {
-            cookie_value: "utm_sour" +
-                          "ce=Self+Test+List&utm_campaign=c2994af7da-xunda_m" +
-                          "other_campaign&utm_medium=email&utm_term=0_f85d50" +
-                          "388c-c2994af7da-69634449",
-            source: "Self+Test+List",
-            campaign: "c2994af7da-xunda_mother_campaign",
-            medium: "email",
-            term: "0_f85d50388c-c2994af7da-69634449"
-
-          }
-        ]
-      end
-
-      let(:klass) { TrafficSourceParser::Result::Campaign }
-
-      it_behaves_like "returns the correct object with attributes"
+	    end
 
     end
 
